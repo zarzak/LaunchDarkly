@@ -14,7 +14,7 @@ def show_message(s):
   print("*** %s" % s)
   print()
   
-ldclient.set_config(Config("sdk-75c13ef0-e2c6-4642-a28a-abdab4ea8165"))
+ldclient.set_config(Config("sdk-1234-abc"))
 
 # The SDK starts up the first time ldclient.get() is called.
 if ldclient.get().is_initialized():
