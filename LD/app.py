@@ -43,7 +43,7 @@ app = Flask(__name__)
 
 # function to return current flag values based on the listener function
 def get_current_flag_value():
-    return ldclient.get().variation("Clear_List", context, False)
+    return ldclient.get().variation("Clear_List", context, True)
 
 
 #### Saving Date today in 2 different formats
