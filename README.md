@@ -44,7 +44,6 @@
 10 - Assignment details<br />
 	&emsp;Part 1 - Feature Flag: This is the flag created in step 5.  It can be toggled on or off via the on/off toggle in Flags/Clear_List<br />
         &emsp;Part 1 - Instant Release/Rollbacks: The listener is enabled in the code and functional<br />
-        &emsp;Part 1 - Remediate: This can be done in the <br />
 	&emsp;Part 2 - Feature Flag: This is the same feature flag as in part 1, above<br />
  	&emsp;Part 2 - Context Attribute: The user attribute was created in the code, and we then associate it with a segment in step 7.b<br />
    	&emsp;Part 2 - Target: Step 8.c adds targeting is against all users (Brian) in the North American segment.  By default the rule is 'on'.  This can be modified to show alternate behavior by changing Step 8.c.4 to 'Clear List Off' to demonstrate that behavior.  Alternatively, instead of creating a geographic targeting rule in 8.c. an 'individual target' rule can be created.  If doing so, assign user brian to either the 'clear list on' or 'clear list off' section, to have the default behavior against user brian be either having the rule on or off.<br />
