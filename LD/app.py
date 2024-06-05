@@ -14,7 +14,7 @@ def show_message(s):
   print("*** %s" % s)
   print()
   
-ldclient.set_config(Config("sdk-1234-abc"))
+ldclient.set_config(Config("sdk-af0867eb-3f59-4705-9125-f2f930287dfe"))
 
 # The SDK starts up the first time ldclient.get() is called.
 if ldclient.get().is_initialized():
@@ -32,8 +32,18 @@ flag_value = ldclient.get().variation("Clear_List", context, True)
 
 show_message("Feature flag 'Clear_List' is %s for this user" % (flag_value))
 
+# Track flag changes with a listener function
+def flag_value_change_listener(flag_change):
+    print(f"{flag_change.key} has changed from {flag_change.old_value} to {flag_change.new_value}")
+    
+listener = ldclient.get().flag_tracker.add_flag_value_change_listener('Clear_List', context, flag_value_change_listener)
+
 #### Defining Flask App
 app = Flask(__name__)
+
+# function to return current flag values based on the listener function
+def get_current_flag_value():
+    return ldclient.get().variation("Clear_List", context, False)
 
 
 #### Saving Date today in 2 different formats
@@ -65,7 +75,7 @@ def dontcreatenewtasklist():
 def updatetasklist(tasklist):
     os.remove('tasks.txt')
     with open('tasks.txt','w') as f:
-        f.writelines(tasklist)
+        f.writelines(tasklist)     
 
 
 ################## ROUTING FUNCTIONS #########################
@@ -75,17 +85,14 @@ def updatetasklist(tasklist):
 def home():
     return render_template('home.html',datetoday2=datetoday2,tasklist=gettasklist(),l=len(gettasklist())) 
 
-if flag_value:
-    # Function to clear the to-do list
-    @app.route('/clear')
-    def clear_task_list():
+# Function to clear the to-do list (functionality based on the feature flag)
+@app.route('/clear')
+def clear_task_list():
+    if get_current_flag_value():
         createnewtasklist()
-        return render_template('home.html',datetoday2=datetoday2,tasklist=gettasklist(),l=len(gettasklist())) 
-else:
-    @app.route('/clear')
-    def clear_task_list():
+    else:
         dontcreatenewtasklist()
-        return render_template('home.html',datetoday2=datetoday2,tasklist=gettasklist(),l=len(gettasklist())) 
+    return render_template('home.html',datetoday2=datetoday2,tasklist=gettasklist(),l=len(gettasklist()))
 
 
 # Function to add a task to the to-do list
