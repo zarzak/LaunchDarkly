@@ -13,7 +13,8 @@ from ldclient.config import Config
 def show_message(s):
   print("*** %s" % s)
   print()
-  
+
+# Replace the SDK key here
 ldclient.set_config(Config("sdk-key-goes-here"))
 
 # The SDK starts up the first time ldclient.get() is called.
